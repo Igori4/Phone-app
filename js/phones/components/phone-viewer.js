@@ -3,16 +3,15 @@ import Component from './component.js'
 export default class PhoneViewer extends Component{
     constructor({
         element,
-        onBack = () => {}
         }) {
         super({element}),
-        this._onBack = onBack;
-        this._element.addEventListener('click', (event) => {
-            const backButton = event.target.closest('[data-batton="back-button"]');
-            if(!backButton) {
-                return;
-            }
-            this._onBack();
+
+        this.on('click', '[data-batton="back-button"]', () => {
+          this.emit('back');
+        })
+        this.on('click', '[data-element="small-preview"]', (event) =>{
+         this.bigImg = this._element.querySelector('[data-element="big-preview"]');
+         this.bigImg.src = event.target.src;
         })
     }
       
@@ -24,7 +23,11 @@ export default class PhoneViewer extends Component{
 
     _render() {
         this._element.innerHTML = `
-        <img class="phone" src="${this._phoneDetaild.images[0]}">
+        <img
+        data-element="big-preview"
+        class="phone" 
+        src="${this._phoneDetaild.images[0]}"
+        >
 
         <button data-batton="back-button">Back</button>
         <button>Add to basket</button>
@@ -35,24 +38,14 @@ export default class PhoneViewer extends Component{
         <p>Motorola XOOM with Wi-Fi has a super-powerful dual-core processor and Android™ 3.0 (Honeycomb) — the Android platform designed specifically for tablets. With its 10.1-inch HD widescreen display, you’ll enjoy HD video in a thin, light, powerful and upgradeable tablet.</p>
     
         <ul class="phone-thumbs">
-          <li>
-            <img src="${this._phoneDetaild.images[0]}">
-          </li>
-          <li>
-            <img src="${this._phoneDetaild.images[1]}">
-          </li>
-          <li>
-            <img src="${this._phoneDetaild.images[2]}">
-          </li>
-          <li>
-            <img src="${this._phoneDetaild.images[3]}">
-          </li>
-          <li>
-            <img src="${this._phoneDetaild.images[4]}">
-          </li>
-          <li>
-            <img src="${this._phoneDetaild.images[5]}">
-          </li>
+          ${
+            this._phoneDetaild.images.map( src => `
+            <li>
+              <img src="${src}" data-element="small-preview">
+            </li>
+          `
+           ).join('')
+          }
         </ul>
         `
     }
