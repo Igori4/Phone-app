@@ -2,7 +2,7 @@ import Component from './component.js'
 
 export default class PhoneViewer extends Component{
     constructor({
-        element,
+        element
         }) {
         super({element}),
 
@@ -13,6 +13,10 @@ export default class PhoneViewer extends Component{
         this.on('click', '[data-element="small-preview"]', (event) =>{
          this.bigImg = this._element.querySelector('[data-element="big-preview"]');
          this.bigImg.src = event.target.src;
+        })
+
+        this.on('click', '[data-batton="add-to-basket"]', () => {
+          this.emit('add-to-basket',this._phoneDetaild);
         })
 
     }

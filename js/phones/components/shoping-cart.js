@@ -1,4 +1,4 @@
-import Component from "./component.js";
+import Component from "./component.js"
 
 export default class ShoppingCart extends Component {
     constructor( {element} ) {
@@ -7,14 +7,14 @@ export default class ShoppingCart extends Component {
         this.allPhoneInBasket = [];
     }
 
-    _addToBasket() {
-        console.log('phone')
-        // this.allPhoneInBasket.push(phone);
-        // const namePhone = phone.name;
-        // const ourBasket = this._element.querySelector('[data-element="phone-in-basket"]');
-        // ourBasket.innerHTML += `
-        // <li> ${namePhone} </li>
-        // `
+
+    _addToBasket(selectedPhone) {
+        this.allPhoneInBasket.push(selectedPhone);
+        const namePhone = selectedPhone.name;
+        const ourBasket = this._element.querySelector('[data-element="phone-in-basket"]');
+        ourBasket.innerHTML += `
+        <li> ${namePhone} </li>
+        `
     }
 
     _render() {
